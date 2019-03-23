@@ -46,6 +46,7 @@
   编译执行  C#  Java         一次性编译，然后再一行一行执行  -- 快
 
 - 语言特点：动态，头等函数 (First-class Function)
+
   + 又称函数是 JavaScript 中的一等公民
 
 - 执行环境：在宿主环境（host environment）下运行，浏览器是最常见的 JavaScript 宿主环境
@@ -2002,7 +2003,7 @@ function factorial (num) {
   }
   ```
 
-  ​
+  
 
 - 遍历 DOM 树
 
@@ -2174,13 +2175,14 @@ console.log(reg.test(dateStr));
 
 ###### **String.match()**
 
-同过字符串方法返回**符合规则**的字符串数组
+通过字符串方法返回**符合规则**的字符串数组
 
 ```javascript
 // 1. 提取工资
 var str = "张三：1000，李四：5000，王五：8000。";
 var array = str.match(/\d+/g);
-console.log(array);
+console.log(array); 
+结果: ["1000", "5000", "8000"]
 
 // 2. 提取email地址
 var str = "123123@xx.com,fangfang@valuedopinions.cn 286669312@qq.com 2、emailenglish@emailenglish.englishtown.com 286669312@qq.com...";
@@ -2204,6 +2206,13 @@ if (reg.test(str)) {
   console.log(RegExp.$2);
   console.log(RegExp.$3);
 }
+
+// 5. 提取空格后的任意字符
+var str = "年份: 2018年"; 
+str = str.match(/\s(\S*)/)[1];
+// str = str.split(":")[1].trim();
+console.log(str); 
+结果:2018年
 ```
 
 ### 正则替换

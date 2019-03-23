@@ -2,6 +2,8 @@
 
 学习目标:
 
+
+
   - 掌握编程jQuery的基本使用
   - 选择器、属性操作、样式操作、节点操作、动画、事件、插件
   - 掌握jQuery插件的使用
@@ -272,8 +274,8 @@ $('ul').click(function () {
 
 | 名称                 | 用法                                       | 描述                     |
 | ------------------ | ---------------------------------------- | :--------------------- |
-| children(selector) | ('ul').children('li')                  | 相当于('ull > i')，子类选择器 |
-| find(selector)     | ('ul').find('li')                      | 相当于('ul li'),后代选择器   |
+| children(selector) | \$('ul').children('li')                  | 相当于\$('ull > i')，子类选择器 |
+| find(selector)     | \$('ul').find('li')                      | 相当于\$('ul li'),后代选择器   |
 | siblings(selector) | $('#first').siblings('li')               | 查找兄弟节点，不包括自己本身。        |
 | parent()           | $('#first').parent()                     | 查找父元素                 |
 | eq(index)          | $('li').eq(2)| 相当于\$('li:eq(2)'),index从0开始 | 取得index位置的jQuery对象 |

@@ -13511,7 +13511,7 @@ for (let pair of arr.entries()) {
 
 类似数组的对象包括好几类。下面是`for...of`循环用于字符串、DOM NodeList 对象、`arguments`对象的例子。
 
-```
+```js
 // 字符串
 let str = "hello";
 
@@ -15269,7 +15269,7 @@ fs.readFile(fileA, 'utf-8', function (err, data) {
 
 Promise 对象就是为了解决这个问题而提出的。它不是新的语法功能，而是一种新的写法，允许将回调函数的嵌套，改成链式调用。采用 Promise，连续读取多个文件，写法如下。
 
-```
+```less
 var readFile = require('fs-readfile-promise');
 
 readFile(fileA)
@@ -23966,7 +23966,7 @@ JavaScript 字符串允许直接输入字符，以及输入字符的转义形式
 
 JSON 格式已经冻结（RFC 7159），没法修改了。为了消除这个报错，现在有一个[提案](https://github.com/tc39/proposal-json-superset)，允许 JavaScript 字符串直接输入 U+2028（行分隔符）和 U+2029（段分隔符）。
 
-```
+```js
 const PS = eval("'\u2029'");
 ```
 
@@ -23980,14 +23980,14 @@ const PS = eval("'\u2029'");
 
 多参数的函数有时需要绑定其中的一个或多个参数，然后返回一个新函数。
 
-```
+```js
 function add(x, y) { return x + y; }
 function add7(x) { return x + 7; }
 ```
 
 上面代码中，`add7`函数其实是`add`函数的一个特殊版本，通过将一个参数绑定为`7`，就可以从`add`得到`add7`。
 
-```
+```js
 // bind 方法
 const add7 = add.bind(null, 7);
 
@@ -23999,7 +23999,7 @@ const add7 = x => add(x, 7);
 
 现在有一个[提案](https://github.com/tc39/proposal-partial-application)，使得绑定参数并返回一个新函数更加容易。这叫做函数的部分执行（partial application）。
 
-```
+```js
 const add = (x, y) => x + y;
 const addOne = add(1, ?);
 
