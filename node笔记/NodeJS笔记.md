@@ -456,6 +456,12 @@ Vue CLI 需要 [Node.js](https://nodejs.org/) 8.9 或更高版本 (推荐 8.11.0
   // 查看某个命令的使用帮助
   // 例如我忘记了 uninstall 命令的简写了，这个时候，可以输入 npm uninstall --help 来查看使用帮助
   npm 命令 --help
+  
+  配置淘宝镜像
+  npm install -g cnpm --registry=https://registry.npm.taobao.org
+  
+  清除npm缓存
+  npm cache clean -f
   ```
 
 #### 3.3.  package.json

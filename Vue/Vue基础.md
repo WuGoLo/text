@@ -612,7 +612,7 @@ npm i vue
 
 ##### 对象语法
 
-渲染的结果<div style="color: red; font-size: 18px;"></div>
+渲染的结果`<div style="color: red; font-size: 18px;"></div>`
 
 ```html
  <div id="app">
@@ -782,12 +782,12 @@ npm i vue
   ```html
   <div id="app">  
   <!-- 下拉框 -->
-          <select v-model="selected">
-              <option disabled value="">请选择</option>
-              <option>北京</option>
-              <option>上海</option>
-              <option>深圳</option>
-          </select> <span> 您选择的是: {{selected}}</span>
+      <select v-model="selected">
+          <option disabled value="">请选择</option>
+          <option>北京</option>
+          <option>上海</option>
+          <option>深圳</option>
+      </select> <span> 您选择的是: {{selected}}</span>
   </div>
       <script src="./vue.js"></script>
       <script>
@@ -799,6 +799,26 @@ npm i vue
           });
       </script>
   ```
+
+- **修饰符**
+
+  + **.lazy**
+
+  + ~~~
+    <input type="text" v-model.lazy="message">
+    ~~~
+
+  + .lazy会转变为在change事件中同步
+
+  + **.number**
+
+  + input虽然平时输入的是数字，但它的类型其实是字符串String，此时就需要用到.number属性。
+
+  + ~~~
+    <input type="text" v-model.number="message">
+    ~~~
+
+  + **.trim** 可以自动过滤输入的首位空格
 
 ### ☛ v-cloak
 
@@ -876,8 +896,8 @@ npm i vue
 
 #### 1. 局部注册
 
-1. 在vm对象的选项中设置自定义指令 **directives:{}**
-2. directives:{'指令的核心名称':{ inserted: (使用指令时的DOM对象) => { 具体的DOM操作 } }}
+1. 在vm对象的选项中设置自定义指令 `directives:{}`
+2. `directives:{'指令的核心名称':{ inserted: (使用指令时的DOM对象) => { 具体的DOM操作 } }}`
 3. 在视图中通过标签去使用指令
 
 ```html
@@ -908,7 +928,7 @@ npm i vue
 #### 2. 全局注册
 
 1. 在创建 Vue 实例之前定义全局自定义指令**Vue.directive()**
-2. Vue.directive('指令的名称',{ inserted: (使用指令的DOM对象) => { 具体的DOM操作 } } );
+2. `Vue.directive('指令的名称',{ inserted: (使用指令的DOM对象) => { 具体的DOM操作 } } );`
 3. 在视图中通过"v-自定义指令名"去使用指令
 
 ```html
@@ -1175,85 +1195,7 @@ addItem: function() {
 }
 ```
 
-## 三、Vue其他知识点
-
-![1536239741647](./assets/1536239741647.png)
-
-### [☛ 过滤器[filter()]](https://cn.vuejs.org/v2/guide/filters.html)
-
-- 作用:处理数据格式
-- 使用位置:**双花括号插值和 v-bind 表达式** (后者从 2.1.0+ 开始支持)。
-- 分类:局部注册和全局注册
-
-#### 1. 局部注册
-
-1. 在vm对象的选项中配置过滤器filters:{}
-2. 过滤器的名字: (要过滤的数据)=>{return 过滤的结果}
-3. 在视图中使用过滤器:  {{被过滤的数据 | 过滤器的名字}}
-
-```html
-<div id="app">
-    <!-- 3. 调用过滤器 -->
-    <p>{{ msg | upper | abc }}</p>
-</div>
-<script src="./vue.js"></script>
-<script>
-    new Vue({
-        el: '#app',
-        data: {
-            msg: 'kfc'
-        },
-        // 1. 设置vm的过滤器filters选项
-        filters: {
-            upper: function(v) {
-                // 2. 在过滤器的方法中操作数据并返回结果
-                return v.toUpperCase();
-            }
-        }
-    });
-</script>
-```
-
-> 注意: 局部注册的过滤器只适用于当前vm对象
-
-#### 2. 全局注册
-
-1. 在创建 Vue 实例之前定义全局过滤器Vue.filter()
-2. Vue.filter('该过滤器的名字',(要过滤的数据)=>{return 对数据的处理结果});
-3. 在视图中通过{{数据 | 过滤器的名字}}或者v-bind使用过滤器
-
-```html
-<div id="app">
-    <!-- 3. 调用过滤器: (msg会自动传入到toUpper中)-->
-    <p>{{msg | toUpper}}</p>
-</div>
-<script src="./vue.js"></script>
-<script>
-    // 1. 定义全局过滤器
-    Vue.filter('toUpper', (value) => {
-        console.log(value);
-        // 2. 操作数据并返回
-        value = value.charAt(0).toUpperCase() + value.substr(1).toLowerCase();
-        console.log(value);
-        return value;
-    });
-
-    new Vue({
-        el: '#app',
-        data: {
-            msg: 'hello'
-        },
-        methods: {
-
-        }
-    });
-</script>
-```
-
-> 注意: 全局注册的过滤器, 不同的vm对象都可以使用
-
-> 1. 过滤器是可以串联使用的, 比如 {{msg | upper1 | upper2}}
-> 2. 过滤器是可以传参数的,比如{{msg | upper1(自己传的参数)}}
+## 三、Vue全局Api
 
 
 
@@ -1285,14 +1227,135 @@ addItem: function() {
 
 
 
-##### 
+### [☛ 过滤器[filter()]](https://cn.vuejs.org/v2/guide/filters.html)
+
+- 作用:处理数据格式
+- 使用位置:**双花括号插值和 v-bind 表达式** (后者从 2.1.0+ 开始支持)。
+- 分类:局部注册和全局注册
+
+#### 1. 局部注册
+
+1. 在vm对象的选项中配置过滤器`filters:{}`
+2. 过滤器的名字: `(要过滤的数据)=>{return 过滤的结果}`
+3. 在视图中使用过滤器:  `{{被过滤的数据 | 过滤器的名字}}`
+
+```html
+<div id="app">
+    <!-- 3. 调用过滤器 -->
+    <p>{{ msg | upper | abc('p1', p2) }}</p>
+</div>
+<script src="./vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 'kfc'
+        },
+        // 1. 设置vm的过滤器filters选项
+        filters: {
+            upper: function(v) {
+                // 2. 在过滤器的方法中操作数据并返回结果
+                return v.toUpperCase();
+            }
+            abc: function(v, 'p1', p2) {
+        		return v+'p1'+p2;
+    		}
+        }
+    });
+</script>
+```
+
+> 注意: 局部注册的过滤器只适用于当前vm对象
+
+#### 2. 全局注册
+
+1. 在创建 Vue 实例之前定义全局过滤器`Vue.filter()`
+2. `Vue.filter('该过滤器的名字',(要过滤的数据)=>{return 对数据的处理结果});`
+3. 在视图中通过`{{数据 | 过滤器的名字}}`或者v-bind使用过滤器
+
+```html
+<div id="app">
+    <!-- 3. 调用过滤器: (msg会自动传入到toUpper中)-->
+    <p>{{msg | toUpper}}</p>
+</div>
+<script src="./vue.js"></script>
+<script>
+    // 1. 定义全局过滤器
+    Vue.filter('toUpper', (value) => {
+        console.log(value);
+        // 2. 操作数据并返回
+        value = value.charAt(0).toUpperCase() + value.substr(1).toLowerCase();
+        console.log(value);
+        return value;
+    });
+
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 'hello'
+        },
+        methods: {
+
+        }
+    });
+</script>
+```
+
+> 注意: 全局注册的过滤器, 不同的vm对象都可以使用
+
+> 1. 过滤器是可以串联使用的, 比如 `{{msg | upper1 | upper2}}`
+> 2. 过滤器是可以传参数的,比如`{{msg | upper1(自己传的参数)}}`
+
+4. 完整实例：
+
+~~~jsp
+<div class="test">
+    <p>{{message | sum}}</p>
+ <!--过滤器函数始终以表达式的值作为第一个参数。带引号的参数视为字符串，而不带引号的参数按表达式计算。-->
+    <p>{{message | cal 10 20}}</p>
+ <!--添加两个过滤器,注意不要冲突-->
+    <p>{{message | sum | currency }}</p> 
+ <!--用户从input输入的数据在回传到model之前也可以先处理-->
+    <input type="text" v-model="message | change"> 
+</div>
+<script type="text/javascript">
+    # 全局
+    Vue.filter("change", {
+        read: function (value) { // model -> view 在更新 `<input>` 元素之前格式化值
+            return value;
+        },
+        write: function (newVal,oldVal) { // view -> model  在写回数据之前格式化值
+            console.log("newVal:"+newVal); 
+            console.log("oldVal:"+oldVal);
+            return newVal;
+        }
+    });
+    var myVue = new Vue({
+        el: ".test",
+        data: {
+            message:12
+        },
+        # 局部
+        filters: {
+            sum: function (value) {
+                return value + 4;
+            },
+            cal: function (value, begin, xing) {
+                return value + begin + xing;
+            }
+        }
+    });
+~~~
+
+
 
 ### ☛ 计算属性[computed]
 
 - 计算属性:是Vue实例的一个选项 computed:{}
 - 作用:在计算属性中去处理data里的数据  
-- 使用场景:任何复杂逻辑，都应当使用**计算属性**
-- 本质: 计算属性的其实就是一个属性,用法和data中的属性一样,但计算属性的值是一个带有返回值的方法
+- 使用场景:任何需要单个数值结果的复杂逻辑，都应当使用**计算属性**。
+- 可以理解:**多个值运算得出一个值**
+- 本质: 计算属性的其实就是一个属性,用法和data中的属性一样,但**计算属性的值是一个带有返回值的方法值**
 
 ```html
 <div id="app">
@@ -1336,7 +1399,71 @@ addItem: function() {
 </script>
 ```
 
-### ☛ watch侦听器
+### ☛ 侦听器[watch]
+
+> 对应一个对象，键是观察表达式，值是对应回调。值也可以是**方法名**，或者是**对象**，包含选项。在实例化时为每个键调用 `$watch()` ;
+
+~~~jsp
+//使用官方vue-cli脚手架书写
+<template>
+　　//观察数据为字符串或数组
+　　 <input v-model="a"/>
+　　 <input v-model="b"/>
+　　//当单观察数据examples2为对象时，如果键值发生变化，为了监听到数据变化，需要添加deep:true参数
+　　 <input v-model="c.inner0"/>
+</template>
+<script>
+    export default {
+        data(){
+            return {
+                a:"",
+                b:"",
+                c:{
+                    inner0:1,
+                    inner1:2
+                }
+            }
+        },
+        watch:{
+            // 监听data中数据
+            a(curVal,oldVal){
+              console.log(curVal,oldVal);
+            },
+            //值可以为methods的方法名
+            b:'a',
+            // 为对象的时候监听不到对象值的变化，需要深度 watcher
+            c: {  
+              handler: function (val, oldVal) { /* ... */ },
+              deep: true //深度解析
+            },
+            // 监听对象属性值
+            # 这是一个性能优化的监听对象属性的方式
+            'c.inner0': function (val, oldVal) { /* ... */ }
+            // 监听之后立即调用一次，immediate
+            d: {  
+              handler: function (val, oldVal) { /* ... */ },
+              immediate: true
+            },
+            // 监听的值可以是个数组
+            e: [
+              'handle1',
+              function handle2 (val, oldVal) { /* ... */ },
+              {
+                handler: function handle3 (val, oldVal) { /* ... */ },
+                /* ... */
+              }
+            ]
+        },
+        methods:{
+            a(curVal,oldVal){
+                conosle.log(curVal,oldVal)
+            }
+        }
+    }
+</script>
+~~~
+
+
 
 ### ☛ mounted
 
@@ -1767,6 +1894,8 @@ deleItem: function(id) {
 
 #### 搜索商品
 
+![1536239741647](./assets/1536239741647.png)
+
 ##### watch侦听器
 
 > 说明: 根据搜索框中的文本信息 动态发送请求获取数据
@@ -2179,7 +2308,17 @@ watch: {
 </script>
 ```
 
+#### is属性挂载组件
 
+在HTML标签中挂载组件【由于Vue组件的模板在某些情况下会受到HTML的限制，比如`<table>`】
+
+~~~html
+<table>
+	<tbody is="my-component"></tbody>
+</table>
+~~~
+
+tbody在渲染时，会被替换为组件的内容，常见的限制元素有`<ul>,<ol>,<select>`。
 
 ### ☛ 组件通信
 
@@ -2189,13 +2328,12 @@ watch: {
 >
 > 兄弟组件
 >
-> 
 
 > 组件让我们提高了代码的复用性,接下来考虑如何在不同的组件中进行传值
 >
 > 比如: 父组件有items数组 在子组件中使用父组件中的items数组去渲染列表
 
-#### 父子组件通信
+#### 1、父子组件通信
 
 > 目的: 要在子组件中使用父组件中data中的属性值
 >
@@ -2204,8 +2342,24 @@ watch: {
 > 步骤:
 >
 > 1. 在子组件中通过props声明自定义属性title
+>
 > 2. 注册局部组件
+>
 > 3. 使用子组件时,设置props选项, 通过自定义属性获取父组件的值
+>
+> 4. props中的值有两种：
+>
+>    数组：`props: ['titile','lists'];`
+>
+>    对象：props: \{
+>
+>    ​		proA: number,
+>
+>    ​		proB: [String, Number]
+>
+>    ​	    \}
+
+##### props值数组传值
 
 ```html
 方法一：
@@ -2217,6 +2371,13 @@ watch: {
 <script src="./vue.js"></script>
 <script>
     var ComponentA = {
+        // 用props来获取，值的传递是单向的，内部不要修改props里变量的值
+        props: ['title', 'lists'], #以数组的形式
+        data: function() { //可以用组件中的data来接受父组件的数据
+            return {
+                Ctitle: this.title
+            }
+        }
         // 1. 在子组件中通过props声明自定义属性title
         template: `<div>
                     <h1>{{ title }}</h1>
@@ -2226,9 +2387,6 @@ watch: {
                       </li>
                     </ul> 
                   </div>`,
-        // 用来接收外部传过来的数据
-        // 值的传递是单向的，内部不要修改props里变量的值
-        props: ['title', 'lists']
     };
 
     new Vue({
@@ -2271,8 +2429,8 @@ watch: {
   })
   Vue.component('child-a', {
     template: `<div>
-    <child-b :msg="str"></child-b>
-    </div>`,
+				<child-b :msg="str"></child-b>
+   			  </div>`,
     data() {
       return {
         str: 101
@@ -2298,11 +2456,102 @@ watch: {
 // props中msg数据不能改!
 ```
 
+##### props值对象传值【主要用于数据验证】
+
+~~~js
+Vue.component('my-component', {
+    props: {
+        // 必须是数字类型
+        propA: Number,
+        // 必须是字符串或者数字类型
+        propB: [String, Number],
+        // 布尔值，如果没有定义，默认值就是true
+        propC: { type: Boolean, default: true },
+        // 数字，而且是必传
+        propD: { type: Number, required: true},
+        // 如果是数组或者对象，默认值必须是一个函数返回值
+        propE: { type: Array, default: function () {return [];} },
+        // 自定义一个验证含函数
+        propF: { validator: function (value) {return value > 10;} }
+   }
+})
+~~~
+
 > 父子组件的传值有多种方法, 兄弟组件的通信也有自己的写法
->
-> 避免混淆,这里我们先只讲父子组件通信的一种写法
->
-> 会在后续的案例中会进行讲解
+
+#### 2、非父子组件通信
+
+##### bus.vue
+
+中央事件总线
+
+第一步：bus.js
+
+~~~js
+import Vue from 'Vue'
+export default new Vue
+~~~
+
+第二步：在两个需要通信的两个组件中分别引入这个bus.js
+
+~~~js
+import Bus from '这里是你引入bus.js的路径' // Bus可自由更换喜欢的名字
+~~~
+
+第三步：传递数据的组件里通过vue实例方法$emit发送事件名称和需要传递的数据。(发送数据组件)\
+
+~~~js
+Bus.$emit('click',data) // 这个click是一个自定义的事件名称，data就是你要传递的数据。
+~~~
+
+第四步：被传递数据的组件内通过vue实例方法$on监听到事件和接受到数据。（接收数据的组件）这里通常挂载监听在vue生命周期created和mounted当中的一个，具体使用场景需要具体的分析。
+
+~~~js
+Bus.$on('click',target => {
+ console.log(target)　//　注意：发送和监听的事件名称必须一致，target就是获取的数据，可以不写target
+})
+~~~
+
+通过以上的四步其实就已经实现了最简单的eventbus的实际应用了，**注意销毁eventBus，防止反复调用**。
+
+第五步：在vue生命周期beforeDestroy或者destroyed中用vue实例的$off方法清除eventBus
+
+```js
+beforeDestroy(){
+	bus.$off('click')
+}
+```
+
+这里只是介绍如何使用eventBus来解决非父子组件通信，但是当项目较大较复杂时，并不适合。到那时，**vuex才是vue给我们提供的最理想的方式**。
+
+##### Vue.\$parent和Vue.$children父链
+
+~~~js
+this.$parent来获取父组件中的数据，this.$children获取子组件中的数据，用法一样
+// message为父组件的数据
+this.$parent.message = "改变之后的内容"
+~~~
+
+注意：尽量避免直接操作父或子组件中的数据，会很混乱
+
+##### 子组件索引[ref]
+
+>  只可以访问，不可以更改，Vue2.x会自动识别是普通标签还是组件
+
+```jsp
+<div id="app">
+	<p ref="p">内容</p>
+	<child-component ref="child"></children-component>
+</div> 
+<script>
+    methods: {
+        // message是父组件中的数据
+        hanleRef: function() {
+            var msg = this.$refs.child.message;
+        }
+    }
+</script>
+```
 
 
 
@@ -2311,7 +2560,7 @@ watch: {
 - 模块：侧重于功能或者数据的封装
 - 组件：包含了 template、style 和 script，而它的 script 可以由各种模块组成
 
-![img](media/b25efd3e8af188b5ab36ccb66baddd71_hd.jpg)
+![img](/assets/b25efd3e8af188b5ab36ccb66baddd71_hd.jpg)
 
 
 
@@ -2476,28 +2725,32 @@ watch: {
 > 1. 可以通过类名设置当前激活的样式
 >
 > 2. router-link默认渲染的结果是a标签  可以通过tag属性 tag="li"
->
-> 3. ~~~css
->     <style>
->       .router-link-exact-active,
->       .router-link-active {
->       		color: red;
->       }
->     </style>
->        当点击页面元素router-link标签时，router的默认样式会被激活，可以设置tag属性 tag="li"
->        <router-link to="/home" tag="li">HOME</router-link>
->     ~~~
+
+3. 
+
+ ~~~
+ <style>
+ .router-link-exact-active,
+ .router-link-active {
+		color: red;
+ }
+ </style>
+ ~~~
+ 当点击页面元素router-link标签时，router的默认样式会被激活，可以设置tag属性 tag="li"
+~~~
+ <router-link to="/home" tag="li">HOME</router-link>
+~~~
 
 ### ☛ 快速体验
 
 > 路由功能: 根据不同的标识 去渲染不同的组件
 
-1. 视图中 设置链接 router-link to="/标识"  渲染之后是a标签
-2. 视图中 设置组件渲染的容器 router-view
+1. 视图中 设置链接 `router-link to="/标识"`  渲染之后是a标签
+2. 视图中 设置组件渲染的容器 `router-view`
 3. js中  提供各个要渲染的组件
-4. js中 实例化路由对象 const router = new VueRouter({路由选项routes:[]})
-5. js中 配置路由 routes:[{path:?,component:?}]
-6. js中 newVue 通过Vue选项 使用router:router  
+4. js中 实例化路由对象` const router = new VueRouter({路由选项routes:[]})`
+5. js中 配置路由` routes:[{path:?,component:?}]`
+6. js中 newVue 通过Vue选项 使用`router:router ` 
 
 具体事例：
 
@@ -2613,13 +2866,13 @@ component: comA
 
 vue-router-编程式导航[或程序化导航]
 
-**this.$router.push({name/path:?});**
+`**this.$router.push({name/path:?});**`
 
 > 实现导航功能的不只是router-link
 >
 > 也能使用js代码实现导航功能 -> 编程式导航
 >
-> this.$router.push({name/path:?});
+> `this.$router.push({name/path:?});`
 >
 > 注意:
 >
@@ -2662,9 +2915,9 @@ vue-router-编程式导航[或程序化导航]
 
 ![1536283239126](./assets/1536283239126.png)
 
-> 如果存在组件嵌套,就需要提供多个视图容器<router-view></router-view>
+> 如果存在组件嵌套,就需要提供多个视图容器`<router-view></router-view>`
 >
-> 同时,router-link和router-view 都可以添加类名、设定样式
+> 同时,`router-link`和`router-view` 都可以添加类名、设定样式
 
 ```html
 <div id="app">
@@ -2982,7 +3235,7 @@ npm run dev
 
 ![1545911961913](assets\自定义私有属性的bind和update简写.png)
 
-![1545912057550](C:\Users\Administrator\Desktop\Vue\assets\自定义样式使用.png)
+![1545912057550](assets\自定义样式使用.png)
 
 像素数值可以是‘30px’形式和直接30数值
 
@@ -3002,9 +3255,9 @@ vue.resource网络请求包讲解：
 
 ![1545960387312](assets\组件template另一种写法.png)
 
-![1545961837275](C:\Users\Administrator\Desktop\Vue\assets\组件中的data用法.png)
+![1545961837275](assets\组件中的data用法.png)
 
-![1546066367587](C:\Users\Administrator\Desktop\Vue\assets\ES6语法.png)
+![1546066367587](assets\ES6语法.png)
 
 
 
@@ -4385,7 +4638,58 @@ formData: {
 
 配置：
 
-![1550662171882](C:\Users\Administrator\Desktop\Vue\assets\1550662171882.png)
+~~~jsx
+import Vue from 'vue'
+import App from './App.vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex);
+
+// store -> 仓库
+const store = new Vuex.Store({
+
+    // state
+    // 数据声明
+    // 响应式数据
+    state: {
+        count: 100,
+        msg: "abc",
+        // a:?复杂依赖了其他state的数据 依赖msg
+    },
+    getters: {
+        a(state) {
+            return state.msg + "xyz";
+            // return 状态中的msg+自己的"xyz"
+        }
+    },
+    // mutations写方法 ->修改state的数据
+    mutations: {
+        fn1(state, argv) {
+            console.log("fn1-----");
+            state.count = state.count + argv;
+        }
+        fn1(state, argv) {
+            console.log(argv);
+        console.log(argv.name)
+        }
+        fn1(state) {
+            console.log("fn1----")
+        }
+    }
+
+})
+
+// npm i vuex
+// 导入
+// Vue.use(xxxx)
+// 实例化vuex对象
+// 挂载
+new Vue({
+    el: '#app',
+    store,
+    render: h => h(App)
+})
+~~~
 
 调用数据：
 
