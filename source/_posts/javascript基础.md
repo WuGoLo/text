@@ -6,6 +6,8 @@
   - JS
   tags:   #标签
   - JS
+  cover: true
+  toc_number: true
 ---
 
 ### javascript的组成
