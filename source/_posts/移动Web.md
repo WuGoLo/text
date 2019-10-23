@@ -332,17 +332,63 @@ em:
 
 ![](移动Web\rem适配分析.png)
 {% asset_img rem适配分析.png "" %}
+### 设置移动端样式初始步骤
+
+1、设置meta和head标签属性
+
+2、设置根字体大小rem
+
+> - 在根元素`<html>`中定义了一个基本字体大小为62.5%（也就是10px。设置这个值主要方便计算，如果没有设置，将是以“16px”为基准 ）；
+> - 一般根元素字体大小设置为10px, 20px, 50px, 100px，方便计算。
+
+常用初始化css代码，配合媒体查询设置
+
+```css
+html{font-size:10px}
+@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
+@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
+@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+@media screen and (min-width:800px){html{font-size:25px}}
+```
+
+用js设置,兼容个移动端设备，【基础版】
+
+```js
+写法一：
+// 此方案也是默认 1rem = 100px，所以你布局的时候，完全可以按照设计师给你的效果图写各种尺寸啦。
+(function (doc, win) {
+  var docEl = doc.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+      recalc = function () {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        if(clientWidth>=640){
+          docEl.style.fontSize = '100px';
+        }else{
+          docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+        }
+      };
+  if (!doc.addEventListener) return;
+  win.addEventListener(resizeEvt, recalc, false);
+  doc.addEventListener('DOMContentLoaded', recalc, false);
+})(document, window);
+```
+
+绝不是每个地方都要用rem，rem只适用于固定尺寸！ 
+
 ### window.devicePixelRatio
 
 window.devicePixelRatio窗口初始化缩放比例
 
 1. 设置网页宽度等于设备物理像素
-
 2. 设置初始化缩放比例（值为1 / window.devicePixelRatio）
 
 **淘宝针对iPhone设备采用的这种方案**
 
-~~~js
+```js
 <script>
 	// 弹出窗口初始缩放比例
     alert(devicePixelRatio);
@@ -360,11 +406,63 @@ window.devicePixelRatio窗口初始化缩放比例
     1px(css) = 3px(物理)
     
 </script>
-~~~
+```
+
+#### 阿里具体js代码压缩版【进阶版】
+
+该方案使用相当简单，把下面这段已压缩过的 原生JS（源码已在文章底部更新，2017/5/3） 放到 HTML 的 head 标签中即可（注:不要手动设置meta标签viewport，该方案自动帮你设置） 
+
+```js
+这是阿里团队的高清方案布局代码，所谓高清方案就是根据设备屏幕的DPR（设备像素比，又称DPPX，比如dpr=2时，表示1个CSS像素由4个物理像素点组成） 
+动态设置 html 的font-size, 同时根据设备DPR调整页面的缩放值，进而达到高清效果。
+# 此代码放到页面heder标签红便可使用
+// 此方案也是默认 1rem = 100px，所以你布局的时候，完全可以按照设计师给你的效果图写各种尺寸啦。
+<script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(e,t){var a=e||100,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=a/2*s*n+"px"},e.exports=t["default"]}]);  flex(100, 1);</script>
+```
+
+源码
+
+```js
+'use strict';
+/**
+ * @param {Number} [baseFontSize = 100] - 基础fontSize, 默认100px;
+ * @param {Number} [fontscale = 1] - 有的业务希望能放大一定比例的字体;
+ */
+const win = window;
+export default win.flex = (baseFontSize, fontscale) => {
+  const _baseFontSize = baseFontSize || 100;
+  const _fontscale = fontscale || 1;
+
+  const doc = win.document;
+  const ua = navigator.userAgent;
+  const matches = ua.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i);
+  const UCversion = ua.match(/U3\/((\d+|\.){5,})/i);
+  const isUCHd = UCversion && parseInt(UCversion[1].split('.').join(''), 10) >= 80;
+  const isIos = navigator.appVersion.match(/(iphone|ipad|ipod)/gi);
+  let dpr = win.devicePixelRatio || 1;
+  if (!isIos && !(matches && matches[1] > 534) && !isUCHd) {
+    // 如果非iOS, 非Android4.3以上, 非UC内核, 就不执行高清, dpr设为1;
+    dpr = 1;
+  }
+  const scale = 1 / dpr;
+
+  let metaEl = doc.querySelector('meta[name="viewport"]');
+  if (!metaEl) {
+    metaEl = doc.createElement('meta');
+    metaEl.setAttribute('name', 'viewport');
+    doc.head.appendChild(metaEl);
+  }
+  metaEl.setAttribute('content', `width=device-width,user-scalable=no,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`);
+  doc.documentElement.style.fontSize = `${_baseFontSize / 2 * dpr * _fontscale}px`;
+};
+```
+
+
 
 ### ※ 适应不同设备尺寸方法解析
 
-设置网页不同设备下的根元素字体大小
+- 设置网页不同设备下的根元素字体大小
+- 手机端设计稿标准尺寸一般为640px和720px
 
 > 制作手机端或响应式布局我们一般用这样的方法：**rem表示的是html的根文字大小**，同样也是css的长度单位，那么我们就可以用rem来表示页面元素的尺寸，在不同的设备下我们通过css样式@media媒体查询来设置相应的字号，从而动态的改变1rem的的值，最终达到适应不同设备的目的。
 

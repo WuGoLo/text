@@ -6,7 +6,7 @@
   - JS
   tags:   #标签
   - JS
-  cover: true
+  cover: /img/timg.gif
   toc_number: true
 ---
 

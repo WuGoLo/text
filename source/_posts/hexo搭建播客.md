@@ -25,13 +25,19 @@ tags:   #标签
 + [Hexo博客配置留言和分享功能](https://www.iteye.com/blog/364434006-2274318)
    - [Hexo配置分享功能](https://blog.csdn.net/Biebersxzl/article/details/82052090)
 
-+ [live2d-widget-models看板动画引入](https://www.jianshu.com/p/3a6342e16e57?tdsourcetag=s_pcqq_aiomsg)
-   - [live2d-widget-models的Github地址](https://github.com/EYHN/hexo-helper-live2d)
-   - [live2d-widget-models模板库Github地址](https://github.com/xiazeyu/live2d-widget-models)
+
 + [不蒜子统计访问量](https://www.jianshu.com/p/c9f83d5b893a)
 + [valine评论系统官网](https://leancloud.cn/dashboard/app.html)
    - [简书valine基础搭建教程](https://www.jianshu.com/p/938fc79c7371)
 + [GitHub创建自己的图片库](https://blog.csdn.net/qq_40927914/article/details/96636270)
 + [好用免费的图床网站](https://www.jianshu.com/p/9ca58d56a12a)
+
+### 々博客特效
+
+- [live2d-widget-models看板动画引入](https://www.jianshu.com/p/3a6342e16e57?tdsourcetag=s_pcqq_aiomsg)
+
+  - [live2d-widget-models的Github地址](https://github.com/EYHN/hexo-helper-live2d)
+  - [live2d-widget-models模板库Github地址](https://github.com/xiazeyu/live2d-widget-models)
+- [动态线条背景](http://www.jfinal.com/share/1236)
 
 更多详细配置过程正在完善。。。。。。
