@@ -4,6 +4,7 @@
   comments: true #是否可评论
   categories:  #分类
   - Node
+  cover: /img/node.png
   tags:   #标签
   - Node
 ---

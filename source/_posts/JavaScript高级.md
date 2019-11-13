@@ -4,6 +4,7 @@
   comments: true #是否可评论
   categories:  #分类
   - JS
+  cover: /img/js.png
   tags:   #标签
   - JS
 ---

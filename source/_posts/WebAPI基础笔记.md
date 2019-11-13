@@ -6,6 +6,7 @@
   - JS
   tags:   #标签
   - JS
+  cover: /img/webapi.png
 ---
 
 ## webAPI概念

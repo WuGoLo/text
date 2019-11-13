@@ -11,6 +11,7 @@ tags:   #标签
 ### 々博客初始搭建
 
 +  [Hexo官网](https://hexo.io/zh-cn/)
++  [小茗同学的Hexo搭建博客详细教程](https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#section-2)
 +  [Hexo博客从搭建部署到SEO优化等详细教程](https://www.jianshu.com/p/efaf72aab32e)
 
 ### 々 博客主题皮肤
@@ -39,6 +40,5 @@ tags:   #标签
   - [live2d-widget-models的Github地址](https://github.com/EYHN/hexo-helper-live2d)
   - [live2d-widget-models模板库Github地址](https://github.com/xiazeyu/live2d-widget-models)
 - [动态线条背景](http://www.jfinal.com/share/1236)
-
 
 更多详细配置过程正在完善。。。。。。
