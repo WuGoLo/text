@@ -6,6 +6,7 @@ categories:  #分类
   - JS
 tags:   #标签
   - JS
+cover: /img/ES6.jpg
 ---
 
 # 〇、ECMAScript 6 入门

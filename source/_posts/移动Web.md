@@ -6,6 +6,7 @@
   - 移动端
   tags:   #标签
   - 移动端
+  cover: /img/yidong.jpg
 ---
 
 # 移动Web

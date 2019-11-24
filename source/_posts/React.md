@@ -8,6 +8,7 @@
   - React
   tags:   #标签
   - React
+  cover: /img/react.png
 ---
 
 ## 一、React基础介绍

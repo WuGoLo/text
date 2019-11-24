@@ -6,6 +6,7 @@
     - Vue框架
   tags:   #标签
     - vue.js
+  cover: /img/vue.png
 ---
 
 # 	Vue基础
@@ -1236,6 +1237,8 @@ addItem: function() {
 ```
 
 
+
+### [☛ 混入[mixin]](<https://www.cnblogs.com/fengyuexuan/p/10918011.html> )
 
 ### [☛ 过滤器[filter()]](https://cn.vuejs.org/v2/guide/filters.html)
 

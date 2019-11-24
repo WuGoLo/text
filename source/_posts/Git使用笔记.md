@@ -18,14 +18,14 @@ tags:   #标签
 借助软件我们可以记录下文件的每一次修改，如下图所示，文件被修改后，记录下了3个版本，
 这样我们通过版本控制系统（软件）便可以非常方便的恢复到任意版本。如下图所示:
 <!--more-->
-![](media/01.jpg)
+![](Git使用笔记/01.jpg)
 {% asset_img 01.jpg "" %}
 这种类型的版本控制系统，功能比较单一，比如很难实现多人协同开发，所以现在几乎很少使用了。
 ##### 集中式版本控制系统
 实际开发环境，一个项目通常是由多人协作共同完成的，如何让在不同终端上的开发者协同工作成了亟待解决的问题，
 集中式版本控制系统便应运而生了。它通过单一的集中管理的服务器，保存所有文件的修订版本，
 协同工作的开发者都通过客户端连到这台服务器，取出最新的文件或者提交更新。其代表为SVN，如下图所示:
-![](media/02.jpg)
+![](Git使用笔记/02.jpg)
 {% asset_img 02.jpg "" %}
 这种方式很好解决了多人协同开发的问题，但是也有一个弊端，如果集中管理的服务器出现故障，将会导致数据（版本）丢失的风险，
 另外协同开发者从集中服务器中更新数据时，严重依赖网络，如果网络不佳，也给开发带来诸多不便。
@@ -35,7 +35,7 @@ tags:   #标签
 这么一来，任何协同开发者用的服务器发生故障，事后都可以用其它协同开发者本地仓库恢复。
 由于版本库在本地计算机，也便不再受网络影响了。如果要将本地的修改，推送给其它协同开发者，
 还需要一台共享服务器，所有开发者通过这台共享服务器同步和更新数据。如下图所示:
-![](media/03.jpg)
+![](Git使用笔记/03.jpg)
 {% asset_img 03.jpg "" %}
 分布式版本控制系统弥补了前面两种版本控制系统的缺陷，成为了版本控制的首选方案。其代表就是Git。
 
@@ -72,7 +72,7 @@ tags:   #标签
 为了更好的学习Git，我们们必须了解Git管理我们文件的3种状态，
 分别是已提交（committed）、已修改（modified）和已暂存（staged），
 由此引入 Git 项目的三个工作区域的概念：Git 仓库、工作目录以及暂存区域。
-![](media/04.jpg)
+![](Git使用笔记/04.jpg)
 {% asset_img 04.jpg "" %}
 基本的Git工作流程如下：
 1、在工作目录中修改文件。
@@ -161,7 +161,7 @@ git init只是创建了一个名为.git的隐藏目录，这个目录就是存�
 **通过Git创建分支来解决实际开发中类似的问题。**
 
 在Git的使用过程中一次提交称为历史记录（版本），并且会生成一个唯一的字符串，如下图：
-![](media/05.jpg)
+![](Git使用笔记/05.jpg)
 {% asset_img 05.jpg "" %}
 当我们在初始化仓库的时候（实际上是产生第1次提交时），Git会默认帮我们创建了一个master的分支，并且有指针（HEAD）指到了末端。
 指针（HEAD）用来标明当前处于哪个分支的哪个版本，如上图指的处于master分支的最后1个版本。
@@ -171,14 +171,14 @@ git init只是创建了一个名为.git的隐藏目录，这个目录就是存�
     git branch hotfix
 ```
 新的分支会在当前分支原有历史版本的结点上进行创建，新建的子分支会继承父分支的所有提交历史，如下图:
-![](media/06.jpg)
+![](Git使用笔记/06.jpg)
 {% asset_img 06.jpg "" %}
 ##### 2.切换 hotfix 分支
 ```text
     git checkout hotfix
 ```
 我们发现HEAD现在又指向了hotfix的末端，如下图:
-![](media/07.jpg)
+![](Git使用笔记/07.jpg)
 {% asset_img 07.jpg "" %}
 ##### 3.在 hotfix 修改bug
 ```text
@@ -186,14 +186,14 @@ git init只是创建了一个名为.git的隐藏目录，这个目录就是存�
     git commit -m 'update bug'
 ```
 这次的提交历史版本就会记录在hotfix这个分支上了，并且HEAD伴随hotfix在移动，如下图:
-![](media/08.jpg)
+![](Git使用笔记/08.jpg)
 {% asset_img 08.jpg "" %}
 ##### 4.切换 master 分支
 ```text
     git checkout master
 ```
 当我们切换回master后，HEAD指向了master分支的末端，并且我们观察发现我们的文件内容还是原来的"模样"，如下图:
-![](media/09.jpg)
+![](Git使用笔记/09.jpg)
 {% asset_img 09.jpg "" %}
 ##### 5.在 master 继续开发
 ```text
@@ -203,21 +203,21 @@ git init只是创建了一个名为.git的隐藏目录，这个目录就是存�
 总结：当我们 'git checkout 分支名称'，HEAD会自动指向对应分支的末端，工作目录中的源码也会随之发生改变。
 这个时候我们就在hotfix这个分支上修复了这个BUG，而我们原来在master分支上的操作并未受到影响。
 但是这时的master分支并没有包含有hotfix的修复，如下图:
-![](media/10.jpg)
+![](Git使用笔记/10.jpg)
 {% asset_img 10.jpg "" %}
 ##### 6.合并 hotfix 分支
 ```text
     git merge hotfix
 ```
 这时master会有两个父结点了，master便包含了hotfix里的修复了，如下图:
-![](media/11.jpg)
+![](Git使用笔记/11.jpg)
 {% asset_img 11.jpg "" %}
 ##### 6.删除 hotfix 分支
 ```text
     git branch -d hotfix
 ```
 这时用来修复BUG创建的hotfix分支已经没有用处了，我们可以将它删除，如下图:
-![](media/12.jpg)
+![](Git使用笔记/12.jpg)
 {% asset_img 12.jpg "" %}
 
 ### git远程（共享）仓库
@@ -304,11 +304,11 @@ git pull ../repo.git master
 
   3、点击右上角加号新建一个仓库【项目】
 
-  ![](media\1.png)
+  ![](Git使用笔记\1.png)
 {% asset_img 1.png "" %}
   4、填写完项目信息，点击create repository。如下图： 
 
-  ![](media\2.png)
+  ![](Git使用笔记\2.png)
 {% asset_img 2.png "" %}
   **注：**README.md建议先不选中，选中之后，新建的仓库中会新建一个说明文件README.md，链接本地git的时候需要必须pull到本地
 
@@ -321,7 +321,7 @@ $ git push -u origin master
 
   **此时Github上就创建好了自己的一个仓库，可以理解为一个百度云的仓库，每个新建的仓库都会有一个地址链接**
 
-  如图：![](media\8.png)
+  如图：![](Git使用笔记\8.png)
 {% asset_img 8.png "" %}
   ### 二、其次，配置公钥和私钥
 
@@ -335,12 +335,17 @@ $ git push -u origin master
 
 // 引号内为Github账号的邮箱地址
 
+- -t  rsa：t是type的缩写
+- -b 4096：b是bit的缩写
+- -C "邮箱"：C是comment的缩写
+- [详细分析看博客](https://blog.csdn.net/weixin_33775582/article/details/93798019)
+
   2、输入完成后，连续按三次回车，如果出现以下效果，则成功生成公钥和私钥
 
   截图如下：
 
-  ![](media\10(2).jpg)
-{% asset_img 10(2).jpg "" %}
+  ![](Git使用笔记\10(2).jpg)
+  {% asset_img 10(2).jpg "" %}
   ```javascript
   代码分析：
   // 1、告诉你已经生成了公交和私钥  
@@ -359,8 +364,8 @@ $ git push -u origin master
 
   本地文件呈现截图
 
-  ![](media\2.jpg)
-{% asset_img 2.jpg "" %}
+  ![](Git使用笔记\2.jpg)
+  {% asset_img 2.jpg "" %}
   3、复制公钥代码
 
   a、可以直接打开上图中的id_rsa.pub文件【通过记事本打开方式打开】
@@ -377,16 +382,16 @@ $ git push -u origin master
 
   4、打开设置SSH key页面 ，账户头像下拉。
 
-  ![](media\3.png)
-{% asset_img 3.png "" %}
+  ![](Git使用笔记\3.png)
+  {% asset_img 3.png "" %}
   依次如图操作
 
-  ![](media\4.png)
-{% asset_img 4.png "" %}
+  ![](Git使用笔记\4.png)
+  {% asset_img 4.png "" %}
   复制的公钥**粘贴到页面的key中即可**。**title根据自己的需求填写，**
 
-  ![](media\5.png)
-{% asset_img 5.png "" %}
+  ![](Git使用笔记\5.png)
+  {% asset_img 5.png "" %}
   最后点击Add SSH key。 
 
   **这样一个Github网站上的仓库就建立好了**
@@ -436,6 +441,7 @@ The file will have its original line ending in your working directory.
 
 （3）设置为input时，添加文件git仓库时，git把crlf编程lf。当有人Check代码时还是lf方式。因此在window操作系统下，不要使用这个设置。
 
+<<<<<<< HEAD
 **3、更换电脑之后git clone出现：[Please make sure you have the correct access rights and the repository exists.问题的解决](https://www.cnblogs.com/cnlg123/p/7762889.html)**
 
 原因：git 上ssh key的问题，两台电脑用的ssh key不同导致
@@ -465,3 +471,37 @@ The file will have its original line ending in your working directory.
 6. 仍然在bash.exe中输入ssh -T git@github.com然后会跳出一堆内容你只需输入yes回车就完事了，然后他会提示你成功了。
 
   然后你就可以正常使用git clone命令了，最后祝你好运哈哈！
+=======
+**3、git或者hexo推送`git push`的时候报错“fatal: The remote end hung up unexpectedly ”**
+
+原因：提交缓存过大的问题
+
+方法一：
+
+~~~nginx
+修改提交缓存大小为500M，或者更大的数字
+
+git config --global http.postBuffer 524288000
+git config --global http.postBuffer 1048576000
+
+或者在克隆/创建版本库生成的 .git目录下面修改生成的config文件增加如下：
+[http]  
+postBuffer = 524288000
+改为：
+postBuffer = 1048576000
+
+~~~
+
+方法二：
+
+配置git的最低速度和最低速度时间：
+
+~~~nginx
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999  单位 秒
+~~~
+
+--global配置对当前用户生效，如果需要对所有用户生效，则用--system
+
+
+>>>>>>> 63e74bc20b51bf3fb7a9936941bcb2ed8f6b8e9c
