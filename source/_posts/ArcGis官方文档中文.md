@@ -71,7 +71,7 @@ require(["esri/Map", "esri/views/MapView"], function(Map, MapView) {
 
 查看用作HTML文件中的容器的参考节点，从而允许用户查看HTML页面内的地图。`MapView`通过将对象传递给构造函数来创建一个新的并设置其属性：
 
-```
+```js
 require(["esri/Map", "esri/views/MapView"], function(Map, MapView) {
   var map = new Map({
     basemap: "streets"
@@ -393,7 +393,7 @@ require(["esri/tasks/Locator", "esri/Map", "esri/views/MapView"], function(Locat
 });
 ```
 
-### 2.收听视图的单击事件，并在单击的位置显示弹出窗口
+### 2.监听视图的单击事件，并在单击的位置显示弹出窗口
 
 在视图上侦听[click事件](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-MapView.html#event-click)，并获取单击位置的经度和纬度。在单击的位置显示弹出窗口，并在弹出的[标题中](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Popup.html#title)显示单击的位置的坐标。为此，我们将在[open（）](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Popup.html#open)方法中设置弹出窗口的[位置](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Popup.html#location)和[标题](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Popup.html#title)属性。
 
@@ -1143,7 +1143,7 @@ const layer = new FeatureLayer({
 map.add(layer);
 ```
 
-## 2、重点功能
+## 2、高亮显示要素
 
 ![1573635912650](E:\学习文档\Myblog\text\source\_posts\ArcGis官方文档中文\1573635912650.png)
 
@@ -1171,7 +1171,7 @@ view.whenLayerView(layer).then(function(layerView) {
 
 有关更多信息和已知限制，请参见“ [标签指南”页面](https://developers.arcgis.com/javascript/latest/guide/labeling/index.html)。
 
-## 4、将标签添加到FeatureLayer2
+## 4、将标签添加到FeatureLayer
 
 ![1573636381492](E:\学习文档\Myblog\text\source\_posts\ArcGis官方文档中文\1573636381492.png)
 
@@ -1346,7 +1346,7 @@ layer.labelingInfo = [nameClass, humidityClass, lowTempClass, highTempClass, win
 
 此示例演示如何在客户端上按属性过滤功能。这可以通过创建一个新的[FeatureFilter](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureFilter.html)并指定其[where](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureFilter.html#where)子句，然后将滤镜对象应用于图层视图的[filter](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-FeatureLayerView.html#filter)属性来完成。
 
-## 这个怎么运作
+#### 这个怎么运作
 
 样本按发出警报的季节过滤洪水警报。要查看不同季节发出的洪水警报，请单击`filter`按钮，然后选择一个季节。
 
@@ -1368,7 +1368,7 @@ function filterBySeason(event) {
 
 该示例演示了如何使用[空间关系](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureFilter.html#spatialRelationship)来发现要素在空间上的相互关系。它在图层上设置[效果](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html)以显示要素符合空间滤镜，同时使不符合空间滤镜的要素变灰。这可以通过创建一个新的`FeatureEffect`并指定其[filter](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html#filter)和[excludeEffect](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html#excludedEffect)属性来完成。然后可以将效果对象应用于图层视图的[效果](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-FeatureLayerView.html#effect)属性。
 
-## 这个怎么运作
+#### 这个怎么运作
 
 应用程序加载后，用户可以选择：
 
@@ -1405,7 +1405,7 @@ function updateFilter() {
 
 ![1573637635472](E:\学习文档\Myblog\text\source\_posts\ArcGis官方文档中文\1573637635472.png)此示例演示如何通过使用[queryFeatures（）](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryFeatures)方法在旧金山的犯罪数据上查询FeatureLayer 。这允许用户设置查询参数，并通过相应的[Popup](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Popup.html)显示查询的响应。
 
-## 这个怎么运作
+#### 这个怎么运作
 
 当应用程序启动时，UI将显示查询选项，可以是基本查询，也可以是按距离查询。根据用户在地图上单击的位置调用查询。在应用程序中单击位置后，将调用此函数。该[FeatureLayer](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html)具有用于其数据进行查询的许多方法。在[（）queryFeatures](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryFeatures)方法允许用户查询在FeatureLayer设有基于输入上[的查询](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html)对象。此方法返回[FeatureSet ](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-FeatureSet.html)[Promise](https://developers.arcgis.com/javascript/latest/guide/programming-patterns/#promises)，可以使用进行访问`.then()`。
 
