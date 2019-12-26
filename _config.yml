@@ -7,7 +7,7 @@ title: 云海雪原
 subtitle:
 description:
 keywords:
-author: 云海奇猿
+author: 雪海の无涯
 language: zh-CN
 timezone:
 
@@ -87,7 +87,7 @@ jsonContent:
   meta: false
   pages: false
   posts:
-    title: true
+    title: false
     date: true
     path: true
     text: false
