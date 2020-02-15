@@ -25,6 +25,6 @@
     "live2d-widget-model-haru": "^1.0.5",
     "live2d-widget-model-wanko": "^1.0.5",
     "or": "^0.2.0",
-    "yarn": "^1.19.1"
+    "yarn": "^1.22.0"
   }
 }
