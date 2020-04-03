@@ -441,7 +441,6 @@ The file will have its original line ending in your working directory.
 
 （3）设置为input时，添加文件git仓库时，git把crlf编程lf。当有人Check代码时还是lf方式。因此在window操作系统下，不要使用这个设置。
 
-<<<<<<< HEAD
 **3、更换电脑之后git clone出现：[Please make sure you have the correct access rights and the repository exists.问题的解决](https://www.cnblogs.com/cnlg123/p/7762889.html)**
 
 原因：git 上ssh key的问题，两台电脑用的ssh key不同导致
@@ -456,13 +455,14 @@ The file will have its original line ending in your working directory.
 
 3. 然后找到系统自动在.ssh文件夹下生成两个文件，id_rsa和id_rsa.pub，用记事本打开id_rsa.pub将全部的内容复制。
 
-4. 打开https://github.com/，登陆你的账户，进入设置（Settings）找到![](Git使用笔记\1239999-20171031180654121-1601381633.jpg)
+4. 打开https://github.com/，登陆你的账户，进入设置（Settings）找到
+![](Git使用笔记\1239999-20171031180654121-1601381633.jpg)
+{% asset_img 1239999-20171031180654121-1601381633.jpg "" %}
 
-   ![](Git使用笔记\1239999-20171031181008293-1652901573.jpg)
+![](Git使用笔记\1239999-20171031181008293-1652901573.jpg)
+{% asset_img 1239999-20171031181008293-1652901573.jpg "" %}
 
 5. 然后将你复制的内容粘贴到key中
-
-   ![img](F:\hexo\source\_posts\React基础笔记\images\1239999-20171031181147121-1513370965.jpg)
 
    再点击Add SSH Key           
 
@@ -471,8 +471,8 @@ The file will have its original line ending in your working directory.
 6. 仍然在bash.exe中输入ssh -T git@github.com然后会跳出一堆内容你只需输入yes回车就完事了，然后他会提示你成功了。
 
   然后你就可以正常使用git clone命令了，最后祝你好运哈哈！
-=======
-**3、git或者hexo推送`git push`的时候报错“fatal: The remote end hung up unexpectedly ”**
+
+**4、git或者hexo推送`git push`的时候报错“fatal: The remote end hung up unexpectedly ”**
 
 原因：提交缓存过大的问题
 
@@ -502,6 +502,3 @@ git config --global http.lowSpeedTime 999999  单位 秒
 ~~~
 
 --global配置对当前用户生效，如果需要对所有用户生效，则用--system
-
-
->>>>>>> 63e74bc20b51bf3fb7a9936941bcb2ed8f6b8e9c
