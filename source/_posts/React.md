@@ -337,8 +337,101 @@
    }
    ```
 
+2. 另一种class创建组件结构，无constructor创建
+
+   ~~~jsx
+   class App extends React.Component {
+     // 直接把state写道class里，定义的是实例对象的属性，对象会自动创建constructor，相对更简洁。
+     state = {
+       a: false,
+       b: "not-panic",
+       c: this.props.whatever
+     }
+   
+     render() {
+       // whatever you like
+     }
+   }
+   ~~~
 
 
+
+#### React的state写在constructor里面和直接写state有什么区别？？
+
+可以参考这篇文章： [React中初始化state的两种方法](https://blog.csdn.net/duola8789/article/details/90142891?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
+
+##### 哪种更好
+
+习惯使用哪种，就使用哪种。
+
+class属性的方式看起来更加简单，不再需要额外的模板代码（`constructor`），也不需要提醒自己调用`super(props)`
+
+有的时候需要在`constructor`中处理事件处理函数（为函数绑定`this`，就像：
+
+~~~jsx
+class Thing extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    // do stuff
+  }
+}
+~~~
+
+可以通过Class属性的另外一种形式来替代上面的形式，可以让一个属性等于一个箭头函数，箭头函数获得了class实例的`this`，所以不再需要在`constructor`中显式的去绑定：
+
+~~~jsx
+class Thing extends React.Component {
+  handleClick = (event) => {
+    // do stuff
+  }
+}
+~~~
+
+
+
+#### React 的 PureComponent Vs Component
+
+**两种情况**
+
+一般我们是这样的创建组件
+
+~~~
+import React, { Component } from 'react';
+
+class Admin extends Component {
+  state = {  }
+  render() { 
+    return ( 
+      <div></div>
+    );
+  }
+}
+ 
+export default Admin;
+~~~
+
+有些快捷方式创建出来是这样的
+
+~~~
+import React, { PureComponent } from 'react';
+
+class Admin extends PureComponent {
+  state = {  }
+  render() { 
+    return ( 
+      <div></div>
+    );
+  }
+}
+ 
+export default Admin;
+~~~
+
+**那么问题来了`PureComponent`和`Component`有什么区别呢？**
 
 ## 10. 两种创建组件方式的对比
 
@@ -442,13 +535,24 @@ ReactDOM.render(< Comment />, document.getElementById('app'))
 - css-loader
 - babel-plugin-react-html-attrs
 
-1. 使用普通的 `style` 样式
+1. 使用普通的 `style` 样式(内嵌样式)
 
    ```jsx
-   <h1 style={ {color: 'red', fontWeight: 200} }></h1>
+   <h1 style={{color: 'red', fontWeight: 200}}></h1>
    ```
 
-2. 安装loader包
+2. 使用行内样式
+
+   ~~~jsx
+   let backAndTextColor = {
+       backgroundColor:'blue',
+       color:'#ff671b',
+       fontSize:40
+   };
+   <div style={backAndTextColor}>行内样式测试</div>
+   ~~~
+
+3. 安装loader包
 
    ~~~js
    npm install style-loader css-loader -D
@@ -457,7 +561,7 @@ ReactDOM.render(< Comment />, document.getElementById('app'))
    { test: /\.css$/, use: ['style-loader', 'css-loader'] } 
    ~~~
 
-3. 启用 css-modules
+4. 启用 css-modules
 
    1. 修改 `webpack.config.js`这个配置文件，为 `css-loader` 添加参数：
 
@@ -502,7 +606,7 @@ ReactDOM.render(< Comment />, document.getElementById('app'))
       <h1 className={cssObj.title}>评论列表组件</h1>
       ```
 
-4. 模块化配置及使用说明
+5. 模块化配置及使用说明
 
    >1、那个组件使用在那个组件中使用；
    >
@@ -523,7 +627,7 @@ ReactDOM.render(< Comment />, document.getElementById('app'))
    >}
    >```
 
-5. 使用`localIdentName`自定义生成的类名格式，可选的参数有：
+6. 使用`localIdentName`自定义生成的类名格式，可选的参数有：
 
    - [path]  表示样式表 `相对于项目根目录` 所在路径
 
@@ -564,7 +668,7 @@ ReactDOM.render(< Comment />, document.getElementById('app'))
 
      
 
-6. 使用 `:local()` 和 `:global()`
+7. 使用 `:local()` 和 `:global()`
 
    - `:local()`包裹的类名，是被模块化的类名，只能通过`className={cssObj.类名}`来使用
 
@@ -582,7 +686,7 @@ ReactDOM.render(< Comment />, document.getElementById('app'))
 
      
 
-7. 注意：只有`.title`这样的类样式选择器，才会被模块化控制，类似于`body`这样的标签选择器，不会被模块化控制；
+8. 注意：只有`.title`这样的类样式选择器，才会被模块化控制，类似于`body`这样的标签选择器，不会被模块化控制；
 
 #### 》在项目中启用模块化并同时使用bootstrap
 
@@ -1461,11 +1565,12 @@ Redux简单理解是一个统一管理项目变量和对象、数组的仓库。
 - action：是当变量被应用后发生的一些值得变化的行为，一般直接发生在组件的事件或者函数中。
 - 流程图：
 
-![](images\redux_flow.png)
-
+![](React\redux_flow.png)
+{% asset_img redux_flow.png "" %}
 - 下边是一个简单的列表增删数据的例子
 
-![1570418969540](images\1570418969540.png)
+![](React\1570418969540.png)
+{% asset_img 1570418969540.png "" %}
 
 例子：
 
@@ -1587,7 +1692,243 @@ class demo1 extends Component {
 export default demo1;
 ~~~
 
+# create-react-app(^3.0)
 
+前言：1、如果用yarn，建议最好一直使用yarn安装依赖，不然可能会出现依赖包版本问题。
+
+​            2、此文档create-react-app是采用2020年最新版本，故以下配置只适用最新版本脚手架创建的项目。
+
+## 1、配置less-loader
+
+- 老版本有webpack.config.dev.js和webpack.config.prod.js两个文件，直接在配置css-loader下复制一次，改为less-loader配置即可
+- 最新版本，只有webpack.config.js一个文件，配置步骤如下
+
+**没有**webpack.config.dev.js和webpack.config.prod.js,查看网上各种解决办法后，**发现是因为create-react-app官方脚手架升级了。**
+
+1、这里我们就在webpack.config.js配置less。
+
+方法：
+
+~~~react
+//找到此位置
+// style files regexes
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+ 
+//在此添加如下两个常量
+const lessRegex =/\.less$/;
+const lessModuleRegex=/\.module\.less$/;
+ 
+// This is the production and development configuration.
+// It is focused on developer experience, fast rebuilds, and a minimal bundle.
+~~~
+
+~~~react
+//找到此位置
+{
+    test: cssRegex,
+        exclude: cssModuleRegex,
+            use: getStyleLoaders({
+                importLoaders: 1,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+            }),
+                // Don't consider CSS imports dead code even if the
+                // containing package claims to have no side effects.
+                // Remove this when webpack adds a warning or an error for this.
+                // See https://github.com/webpack/webpack/issues/6571
+                sideEffects: true,
+},
+    // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
+    // using the extension .module.css
+    {
+        test: cssModuleRegex,
+            use: getStyleLoaders({
+                importLoaders: 1,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules: true,
+                getLocalIdent: getCSSModuleLocalIdent,
+            }),
+    },
+
+        //在这之后仿照上面添加如下代码
+        {
+            test: lessRegex,
+                exclude: lessModuleRegex,
+                    use: getStyleLoaders({
+                        importLoaders: 2,
+                        sourceMap: isEnvProduction && shouldUseSourceMap,
+                    }),
+                        sideEffects: true,
+        },
+            {
+                test: lessModuleRegex,
+                    use: getStyleLoaders({
+                        importLoaders: 2,
+                        modules: true,
+                        getLocalIdent: getCSSModuleLocalIdent,
+                        sourceMap: isEnvProduction && shouldUseSourceMap,
+                    }),
+            },
+~~~
+
+2、以上步骤做完之后运行，我们当然还需要安装less-loader包
+
+下载less-loader
+
+`npm i less-loader -S`    或   `yarn add less-loader`
+
+3、但是当我们下载完成之后，重新运行项目，会报错：`ERROR:Cannot find module ‘less’`
+
+这是为什么呢？？？我们已经安装了less-loader，看看官方文档，建议我们安装的那几个loader：**less-loader**、**css-loader**、**style-loader**都装了还是这个错误！！！
+
+解决：就是字面意思，少了less模块，安装吧 =》 `npm i less -S`  或  `yarn add less`，这样再运行就可以了。
+
+## 2、antD(^4.0)按需加载组件
+
+1、安装插件包：`yarn add babel-plugin-import`，不同于antD官方，我们不用`config-overrides.js`文件
+
+2、配置package.json文件，找到babel配置，添加如下代码
+
+~~~json
+"babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": true // "css" or true, css引入css文件，true默认引入less文件
+        }
+      ]
+    ]
+  }
+~~~
+
+## 3、全局主题自定义
+
+参考：antD官方，[定制主题](https://ant.design/docs/react/customize-theme-cn)在webpack.config.js中，使用`less-loader`进行配置。**这里我们不用antD上的，有坑！！！，后边会补坑**
+
+前提：根据本篇配置好less-loader和按需加载的步骤，不然可能会报错。
+
+在webpack.config.js大概第110行，搜`preProcessor`，对整个判断进行修改，代码如下：
+
+~~~js
+if (preProcessor) {
+    let loader = {
+        loader: require.resolve(preProcessor),
+        options: {
+            sourceMap: isEnvProduction && shouldUseSourceMap,
+        }
+    }
+    if (preProcessor === "less-loader") {    //新增
+        loader.options.modifyVars = {
+            'primary-color': '#1DA57A',
+            'link-color': '#1DA57A',
+            'border-radius-base': '2px'
+        }
+        loader.options.javascriptEnabled = true
+    }    //EndOf新增
+    loaders.push(loader);
+}
+~~~
+
+## 4、填坑！
+
+对于以上三步必须这么做，网上还搜到不同步骤有不同的配置，按需加载和less-loader的配置也有不同。但是如果想最后定制主题，那就可能会遇到一些问题。
+
+配置自定义主题本文总结两个方法：
+
+方法一：按本章步骤1、2、3进行即可，最后主题就会更改，当然不打算自定义主题，那么随意配置。
+
+方法二：可以参考这篇文章，[antD自定义主题](https://blog.csdn.net/focusdroid/article/details/85381042)
+
+以下是方法二的步骤：
+
+1、在webpack.config.js搜plugins，找到393行,在plugins下添加这行代码,注释部分
+
+~~~jsx
+["import", {"libraryName": "antd", "libraryDirectory":"es", "style": true}],
+~~~
+
+![](React\image-20200314170040403.png)
+{% asset_img image-20200314170040403 "" %}
+
+2、搜exclude，在这里添加一个less文件的正则进行匹配输出
+
+![](React\image-20200314170258758.png)
+{% asset_img image-20200314170258758.png "" %}
+
+3、搜索rules，在其中添加这行代码，用来解析less文件，modifyVars中即为自定义更改antd样式，这里也可以引入自定义的.less样式文件。
+
+~~~jsx
+{
+    test: /\.less$/,
+        use: [{
+            loader: "style-loader"
+        }, {
+            loader: "css-loader"
+        }, {
+            loader: "less-loader",
+            options: {
+                sourceMap: true,
+                modifyVars: {
+                    'primary-color': '#1DA57A',
+                    'link-color': '#1DA57A',
+                    'border-radius-base': '2px',
+                },
+                javascriptEnabled: true,
+            }
+        }]
+},
+~~~
+
+![](React\image-20200314170800430.png)
+{% asset_img image-20200314170800430.png "" %}
+
+
+## 5、配置'@'代替相对路径../../
+
+再webpack.config.js中搜索`resolve`，在其中的`alias{}`中添加配置
+
+~~~jsx
+'@': paths.appSrc
+~~~
+
+![](React\image-20200318114255910.png)
+{% asset_img image-20200318114255910.png "" %}
+
+## 6、css模块化处理
+
+在create-react-app v2.0之前的版本，网上又很多教程，需要在webpack.config.dev.js和webpack.config.prod.js中配置。配置连接参考：https://www.cnblogs.com/juexin/p/9238369.html。也可以参考本篇第一章，11条设置样式部分。
+
+我们这里讲的是create-react-app v2.0之后最新版本
+
+**最新版本中已经默认配置了css模块化**
+
+我们要做的就是建立样式时，需要模块化的样式文件使用`xxx.moudel.css`或者`xxx.moudel.scss`命名
+
+然后引入：
+
+~~~js
+css引入方式 import xxx from 'xxx.module.css'
+scss引入方式 import xxx from 'xxx.module.scss'
+
+用法：<div className={xxx.styleName}>
+~~~
+
+参考文章 》 https://blog.csdn.net/weixin_42262889/article/details/101151958
+
+7、关闭eslint
+
+在webpack.config.js中找到rules下的eslint-loader，注释掉配置即可
+
+![](React\image-20200318151247051.png)
+{% asset_img image-20200318151247051.png "" %}
 
 ## React项目相关框架及文章
 
