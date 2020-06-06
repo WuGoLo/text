@@ -1236,7 +1236,9 @@ addItem: function() {
 </script>
 ```
 
+### provide/inject精讲
 
+<https://segmentfault.com/a/1190000019836663> 
 
 ### [☛ 混入[mixin]](<https://www.cnblogs.com/fengyuexuan/p/10918011.html> )
 
